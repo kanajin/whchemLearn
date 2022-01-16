@@ -1,3 +1,5 @@
+import random
+from re import sub
 import requests
 import json
 
@@ -9,7 +11,8 @@ class Fucker:
         self.user = {'username': usr, 'password': pwd}
         self.session.headers.update(self.defaultHeader)
         self.subject_list = self.get_subject_list()
-
+        self.update_subject_list = False
+        self.temp_subject = []
 
     # 登录并保存登录信息
     def login(self):
@@ -47,7 +50,22 @@ class Fucker:
     # 通过题目列表查找答案，使用题面匹配，返回一个答案列表字符串
     def get_subject_answer(self, breakthrough_subject_list):
         def get_answer(subject):
-            return self.subject_list[subject['title']]['answers'].replace(';', ',')
+            if(not subject['title'] in self.subject_list):
+                return guess_answer(subject)
+            else:
+                return self.subject_list[subject['title']]['answers'].replace(';', ',')
+        # 如果题库中不存在该题，瞎猜一个
+        def guess_answer(subject):
+            self.update_subject_list = True
+            answer = ''
+            if(subject['txstr'] == '单选类' or subject['txstr'] == '判断类'):
+                answer = chr(random.randint(65,68))
+            else:
+                answer = "A,B,C,D,E,F,G"[0: random.randrange(2, 13, 2)]
+            subject['answer'] = answer
+            self.temp_subject.append(subject)
+            return answer
+
         return str([
             {
                 'tmid': x['tmid'],
@@ -55,8 +73,15 @@ class Fucker:
             } for x in breakthrough_subject_list
         ])
 
-    # 如果题库中不存在该题，瞎猜一个
-    
+    # 修改json题库文件
+    def update_subject(self):
+        with open('subjectlist.json', 'rb+', encoding='utf-8') as f:
+            subject_dict = json.load(f)
+            map(lambda x: subject_dict.update(x), self.temp_subject)
+            f.truncate()
+            f.write(json.dumps(subject_dict, ensure_ascii=False))
+        print('subject dict updated')
+        self.update_subject_list = False
 
     # 获取闯关答题提交表单，接收入参为闯关答题ID、题目列表和答案列表
     def get_breakthrough_submitdic(self, breakthrough_id, subject_list):
@@ -72,4 +97,10 @@ class Fucker:
         for breakthrough_id in nopass_list:
             subject_list = self.get_breakthrough_subject(breakthrough_id)
             data = self.get_breakthrough_submitdic(breakthrough_id, subject_list)
-            self.session.post(self.baseAddress+"Api/PointAnswer/SubmitPointAnswer", data=data)
+            breakthrough_response = self.session.post(self.baseAddress+"Api/PointAnswer/SubmitPointAnswer", data=data).json()
+            if(self.update_subject_list and breakthrough_response['state']=='success'):
+                self.update_subject()
+            elif breakthrough_response['state']!='success':
+                self.breakthrough()
+            else:
+                print('success')
