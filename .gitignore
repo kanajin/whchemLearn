@@ -1,0 +1,4 @@
+*.ipynb
+*.sql
+tk.json
+*.db

@@ -1,0 +1,8 @@
+[
+    {'TmSourceType': 0, 'Tk_ID': 657, 'Tm_ID': 49045, 'Tm_Tx': 593, 'Tm_BaseTx': '单选类', 'Parent_ID': None, 'Relate_Tm': None, 'Title': '液环泵可达到的极限真空范围为（）。', 'Tm_Key': '液环泵基础知识', 'Options': '2KPa～4KPa;2MPa～4MPa;200Pa～400Pa;20Pa～40Pa', 'Answers': 'Z', 'Difficulty': '易', 'Remark': '', 'Files': '', 'FileUrl': '', 'FileAnswerTemplate': None, 'AllowStudentUploadAnswer': 0, 'UserAnswer': '', 'Mark': None, 'UserAnswerFile': None, 'AnswerTime': '', 'AllowReport': 0, 'AnswerRight': 0, 'UserScore': 0.0, 'Tm_Tx_Str': '单选题', 'Score': 1.0, 'AttachFileInfo': None, 'QaResult': None
+    },
+    {'TmSourceType': 0, 'Tk_ID': 657, 'Tm_ID': 48949, 'Tm_Tx': 592, 'Tm_BaseTx': '判断类', 'Parent_ID': None, 'Relate_Tm': None, 'Title': '长时间关闭磁力泵出口阀，泵可以正常运行。', 'Tm_Key': '磁力泵', 'Options': '对;错', 'Answers': 'Z', 'Difficulty': '易', 'Remark': '', 'Files': '', 'FileUrl': '', 'FileAnswerTemplate': None, 'AllowStudentUploadAnswer': 0, 'UserAnswer': '', 'Mark': None, 'UserAnswerFile': None, 'AnswerTime': '', 'AllowReport': 0, 'AnswerRight': 0, 'UserScore': 0.0, 'Tm_Tx_Str': '判断题', 'Score': 1.0, 'AttachFileInfo': None, 'QaResult': None
+    },
+    {'TmSourceType': 0, 'Tk_ID': 657, 'Tm_ID': 48937, 'Tm_Tx': 593, 'Tm_BaseTx': '单选类', 'Parent_ID': None, 'Relate_Tm': None, 'Title': '“屏蔽泵P3泵体循环水夹套出现砂眼，水泄漏并伴随由光气味道”的案例中，屏蔽泵的型式为（   ）。', 'Tm_Key': '屏蔽泵操作及故障案例', 'Options': '泥浆分离型;基本型;高温型;自吸型', 'Answers': 'Z', 'Difficulty': '易', 'Remark': '', 'Files': '', 'FileUrl': '', 'FileAnswerTemplate': None, 'AllowStudentUploadAnswer': 0, 'UserAnswer': '', 'Mark': None, 'UserAnswerFile': None, 'AnswerTime': '', 'AllowReport': 0, 'AnswerRight': 0, 'UserScore': 0.0, 'Tm_Tx_Str': '单选题', 'Score': 1.0, 'AttachFileInfo': None, 'QaResult': None
+    }
+]
