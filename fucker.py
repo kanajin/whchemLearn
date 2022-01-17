@@ -33,7 +33,7 @@ class Fucker:
     # 获取闯关答题未完成的项目，返回一个list
     def get_breakthrough_nopass_id(self):
         breakthroughlist = self.session.post(self.baseAddress+"Api/PointAnswer/GetPointAnswerDetail", data={"pageSize": "2000", "pageIndex": "0"}).json()["data"]["list"]
-        return [x['PointLevelId'] for x in filter(lambda e: e['CanJoin']==True, breakthroughlist)]
+        return [x['PointLevelId'] for x in filter(lambda e: e['IsPassed']==False, breakthroughlist)]
 
     # 获取闯关答题题目，接收入参为闯关答题ID，在外部迭代调用，返回一个题目列表
     def get_breakthrough_subject(self, breakthrough_id):
@@ -75,10 +75,12 @@ class Fucker:
 
     # 修改json题库文件
     def update_subject(self):
-        with open('subjectlist.json', 'rb+', encoding='utf-8') as f:
+        subject_dict = {}
+        with open('subjectlist.json', 'r', encoding='utf-8') as f:
             subject_dict = json.load(f)
+
+        with open('subjectlist.json', 'w', encoding='utf-8') as f:
             map(lambda x: subject_dict.update(x), self.temp_subject)
-            f.truncate()
             f.write(json.dumps(subject_dict, ensure_ascii=False))
         print('subject dict updated')
         self.update_subject_list = False
