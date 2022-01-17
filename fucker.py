@@ -1,5 +1,4 @@
 import random
-from re import sub
 import requests
 import json
 
@@ -92,17 +91,26 @@ class Fucker:
             'answer': self.get_subject_answer(subject_list),
             'second': '20'
         }
-
+    
+    # 获取闯关答题结果
+    def is_breakthrough_passed(self, breakthrough_response):
+        breakthrough_result = self.session.post(self.baseAddress+'Api/PointAnswer/GetPointAnswerResult', data=breakthrough_response).json()
+        if breakthrough_result['data']['result']['IsPass'] == 1:
+            return True
+        else:
+            return False
     # 闯关答题任务
     def breakthrough(self):
         nopass_list = self.get_breakthrough_nopass_id()
         for breakthrough_id in nopass_list:
             subject_list = self.get_breakthrough_subject(breakthrough_id)
             data = self.get_breakthrough_submitdic(breakthrough_id, subject_list)
-            breakthrough_response = self.session.post(self.baseAddress+"Api/PointAnswer/SubmitPointAnswer", data=data).json()
-            if(self.update_subject_list and breakthrough_response['state']=='success'):
+            breakthrough_response = self.session.post(self.baseAddress+"Api/PointAnswer/SubmitPointAnswer", data=data).json()['data']
+            ispassed = self.is_breakthrough_passed(breakthrough_response)
+            if self.update_subject_list and ispassed:
                 self.update_subject()
-            elif breakthrough_response['state']!='success':
+            elif not ispassed:
+                self.update_subject_list = False
                 self.breakthrough()
             else:
                 print('success')
