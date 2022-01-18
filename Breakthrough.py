@@ -1,4 +1,3 @@
-import logging
 from Api import Api
 import json
 from OperateSubject import OperateSubject
