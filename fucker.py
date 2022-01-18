@@ -1,6 +1,7 @@
 import random
 import requests
 import json
+import time
 
 class Fucker:
     def __init__(self, usr, pwd):
@@ -105,6 +106,7 @@ class Fucker:
         for breakthrough_id in nopass_list:
             subject_list = self.get_breakthrough_subject(breakthrough_id)
             data = self.get_breakthrough_submitdic(breakthrough_id, subject_list)
+            time.sleep(20)
             breakthrough_response = self.session.post(self.baseAddress+"Api/PointAnswer/SubmitPointAnswer", data=data).json()['data']
             ispassed = self.is_breakthrough_passed(breakthrough_response)
             if self.update_subject_list and ispassed:

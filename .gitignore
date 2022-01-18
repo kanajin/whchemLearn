@@ -3,3 +3,4 @@
 tk.json
 tm.json
 *.db
+__pycache__/
