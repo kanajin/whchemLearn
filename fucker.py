@@ -1,4 +1,5 @@
 import random
+from re import X
 import requests
 import json
 import time
@@ -27,8 +28,11 @@ class Fucker:
 
     # 获取未完成的任务，返回一个filter对象
     def get_mission_nopass(self):
+        def get_canjoin_mission(mission_list):
+            return lambda x: x['LimitIntegral'] != ['Integral'] and x['TaskType'] != 12
+
         mission_list = self.session.get(self.baseAddress+"Api/Common/Task/GetTaskList", data={"taskGroup": "0"}).json()['data']['list']
-        return filter(lambda e: e['LimitIntegral'] != e['Integral'] and e["TaskType"] != 12, mission_list)
+        return filter(get_canjoin_mission(mission_list), mission_list)
 
     # 获取闯关答题未完成的项目，返回一个list
     def get_breakthrough_nopass_id(self):
@@ -66,7 +70,7 @@ class Fucker:
             self.temp_subject.append(subject)
             return answer
 
-        return str([
+        return json.dumps([
             {
                 'tmid': x['tmid'],
                 'answer': get_answer(x)
@@ -81,7 +85,8 @@ class Fucker:
 
         with open('subjectlist.json', 'w', encoding='utf-8') as f:
             map(lambda x: subject_dict.update(x), self.temp_subject)
-            f.write(json.dumps(subject_dict, ensure_ascii=False))
+            json.dump(subject_dict, f, ensure_ascii=False)
+            #f.write(json.dumps(subject_dict, ensure_ascii=False))
         print('subject dict updated')
         self.update_subject_list = False
 
