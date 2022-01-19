@@ -1,8 +1,7 @@
-from Breakthrough import Breakthrough
-from Api import Api
+from WeeklyPractice import WeeklyPractice
+from fucker import Fucker
 
 if __name__ == '__main__':
-    a = Api()
-    a.login()
-    b = Breakthrough(a)
-    b.breakthrough()
+    fuker = Fucker()
+    #fuker.breakthrough()
+    fuker.weeklypractice()
