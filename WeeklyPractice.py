@@ -3,8 +3,9 @@ from OperateSubject import OperateSubject
 import time
 from Exam import Exam
 
+
 class WeeklyPractice:
-    def __init__(self, api:Api):
+    def __init__(self, api: Api):
         self.api = api
         self.answer_list = OperateSubject.load_subject('normalsubject.json')
 
@@ -12,7 +13,7 @@ class WeeklyPractice:
     def get_info(self):
         info = self.api.get_weeklypractice_info()
         weeklist = info['list'][int(time.strftime('%m'))-1]['WeekList']
-        thisweek = list(filter(lambda x: x['State']=='Doing', weeklist))[0]
+        thisweek = list(filter(lambda x: x['State'] == 'Doing', weeklist))[0]
         return {
             'year': str(thisweek['Year']),
             'month': str(thisweek['Month']),
@@ -25,8 +26,8 @@ class WeeklyPractice:
         return [
             (
                 {
-                    "tmid": x["Tm_ID"], 
-                    "txstr": x["Tm_BaseTx"], 
+                    "tmid": x["Tm_ID"],
+                    "txstr": x["Tm_BaseTx"],
                     "title": x["Title"],
                     "options": x["Options"]
                 }
@@ -52,7 +53,7 @@ class WeeklyPractice:
     # 答题总接口
     def dealweeklypractice(self, thisweek):
         subject_list = self.get_subject(thisweek)
-        #time.sleep(15)
+        # time.sleep(15)
         ispassed = self.get_submit(thisweek, subject_list)
         if not ispassed:
             self.dealweeklypractice()

@@ -3,23 +3,25 @@ from OperateSubject import OperateSubject
 import time
 from Exam import Exam
 
+
 class Breakthrough:
     def __init__(self, api: Api):
         self.api = api
-        self.answer_list = OperateSubject.load_subject('breakthroughsubject.json')
+        self.answer_list = OperateSubject.load_subject(
+            'breakthroughsubject.json')
 
     # 获取闯关答题未完成的项目，返回一个list
     def get_nopass_id(self):
         breakthroughlist = self.api.get_breakthrough_nopass()
-        return [x['PointLevelId'] for x in filter(lambda e: e['IsPassed']==False, breakthroughlist)]
+        return [x['PointLevelId'] for x in filter(lambda e: e['IsPassed'] == False, breakthroughlist)]
 
     # 获取题目
     def get_subject(self, id):
         breakthrough_subject_list = self.api.get_breakthrough_subject(id)
         return [(
             {
-                "tmid": x["Tm_ID"], 
-                "txstr": x["Tm_BaseTx"], 
+                "tmid": x["Tm_ID"],
+                "txstr": x["Tm_BaseTx"],
                 "title": x["Title"],
                 "options": x["Options"]
             }

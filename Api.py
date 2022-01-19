@@ -1,6 +1,7 @@
 import requests
 import json
 
+
 class Api:
     base_url = 'https://learning.whchem.com:6443/'
     url_mission_nopass = base_url+'Api/Common/Task/GetTaskList'
@@ -15,7 +16,8 @@ class Api:
 
     def __init__(self):
         self.session = requests.Session()
-        self.header = {'User-Agent': 'Mozilla /5.0 (iPhone; CPU iPhone OS 13_2_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.0.3 Mobile/15E148 Safari/604.1'}
+        self.header = {
+            'User-Agent': 'Mozilla /5.0 (iPhone; CPU iPhone OS 13_2_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.0.3 Mobile/15E148 Safari/604.1'}
         self.loginstate = self.login()
 
     # 登录，并保存登录信息
@@ -36,7 +38,7 @@ class Api:
 
         def login_error(login_state):
             print(login_state['msg'])
-        
+
         def dealwith_response(login_state):
             if login_state['state'] != 'success':
                 login_error(login_state)
@@ -44,7 +46,7 @@ class Api:
                 tokenid = login_state['data']['TokenID']
                 self.session.headers.update({'authorization': tokenid})
                 print('login success')
-        
+
         login_url = 'https://learning.whchem.com:6443/Api/User/Login'
         usr_dict = {}
         try:
@@ -58,12 +60,14 @@ class Api:
 
     # 获取闯关答题未完成项目，返回list
     def get_breakthrough_nopass(self):
-        response = self.Post(Api.url_breakthrough_nopass, {"pageSize": "2000", "pageIndex": "0"})
+        response = self.Post(Api.url_breakthrough_nopass, {
+                             "pageSize": "2000", "pageIndex": "0"})
         return response.json()['data']['list']
 
     # 获取闯关答题题目，返回题目list
     def get_breakthrough_subject(self, id):
-        response = self.Post(Api.url_breakthrough_getsubject, {"level": id, "isExercise": "false"})
+        response = self.Post(Api.url_breakthrough_getsubject, {
+                             "level": id, "isExercise": "false"})
         return response.json()['data']['list']
 
     # 闯关答题提交
@@ -78,7 +82,8 @@ class Api:
 
     # 获取每周一练信息
     def get_weeklypractice_info(self):
-        response = self.Post(Api.url_weeklypractice_info, {'year': '-1', 'month': '-1'})
+        response = self.Post(Api.url_weeklypractice_info, {
+                             'year': '-1', 'month': '-1'})
         return response.json()['data']
 
     # 获取每周一练题目
