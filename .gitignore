@@ -7,3 +7,6 @@ __pycache__/
 backup/
 usr.json
 .vscode/
+*.spec
+build/
+dist/

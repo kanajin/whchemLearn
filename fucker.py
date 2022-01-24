@@ -33,10 +33,10 @@ class Fucker:
             print('功能完善中，请见谅!')
 
         elif func == 3:
-            self.breakthrough()
+            self.weeklypractice()
 
         elif func == 4:
-            self.weeklypractice()
+            self.breakthrough()
 
         elif func == 0:
             # 占位
