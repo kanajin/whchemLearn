@@ -2,7 +2,7 @@ import random
 import json
 
 class Exam:
-    def get_answer_selfadapting(subject, answer_list, type):
+    def get_answer_selfadapting(self, subject, answer_list, type):
         def guess_answer(subject):
             def guess_A_or_B():
                 return "AB"[random.randint(0,1)]
@@ -22,7 +22,7 @@ class Exam:
         def self_adapting_return(subject, answer_list, type):
             # 通过题面找答案
             if type == 0:
-                if(not subject['txstr'] in answer_list):
+                if(not subject['title'] in answer_list):
                     return guess_answer(subject)
                 else:
                     return answer_list[subject['title']]['answers'].replace(';', ',')
@@ -35,10 +35,10 @@ class Exam:
 
         return self_adapting_return(subject, answer_list, type)
 
-    def get_answer(self, subject_list, answer_list):
+    def get_answer(self, subject_list, answer_list, type):
         return json.dumps([
             {
                 'tmid': x['tmid'],
-                'answer': self.get_answer_selfadapting(x,answer_list)
+                'answer': self.get_answer_selfadapting(x, answer_list, type)
             } for x in subject_list
         ])

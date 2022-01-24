@@ -31,8 +31,8 @@ class Breakthrough:
     def get_submit(self, id, subject_list):
         submit = {
             'level': id,
-            'answer': Exam.get_answer(subject_list, self.answer_list),
-            'second': '20'
+            'answer': Exam().get_answer(subject_list, self.answer_list, 0),
+            'second': '15'
         }
         resultdata = self.api.breakthrough_submit(submit)
         result = self.api.is_breakthrough_passed(resultdata)
@@ -47,7 +47,7 @@ class Breakthrough:
         time.sleep(15)
         ispassed = self.get_submit(id, subject_list)
         if not ispassed:
-            self.dealbreakthrough()
+            self.dealbreakthrough(id)
         else:
             print('success')
 
@@ -56,4 +56,4 @@ class Breakthrough:
         nopass = self.get_nopass_id()
         for id in nopass:
             self.dealbreakthrough(id)
-        print('breakthrough success')
+        print('闯关答题已完成')

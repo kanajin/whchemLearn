@@ -1,18 +1,19 @@
+from urllib import response
 import requests
 import json
 
 
 class Api:
     base_url = 'https://learning.whchem.com:6443/'
-    url_mission_nopass = base_url+'Api/Common/Task/GetTaskList'
-    url_breakthrough_nopass = base_url+'Api/PointAnswer/GetPointAnswerDetail'
-    url_breakthrough_getsubject = base_url+'Api/PointAnswer/GetPointAnswerQuestion'
-    url_breakthrough_submit = base_url+'Api/PointAnswer/SubmitPointAnswer'
-    url_breakthrough_result = base_url+'Api/PointAnswer/GetPointAnswerResult'
-    url_weeklypractice_info = base_url+'Api/WeeklyPractice/GetList'
-    url_weeklypractice_getsubject = base_url+'Api/WeeklyPractice/GetQuestion'
-    url_weeklypractice_submit = base_url+'Api/WeeklyPractice/SubmitTest'
-    url_weeklypractice_result = base_url+'Api/WeeklyPractice/GetResult'
+    url_mission_nopass = f'{base_url}Api/Common/Task/GetTaskList'
+    url_breakthrough_nopass = f'{base_url}Api/PointAnswer/GetPointAnswerDetail'
+    url_breakthrough_getsubject = f'{base_url}Api/PointAnswer/GetPointAnswerQuestion'
+    url_breakthrough_submit = f'{base_url}Api/PointAnswer/SubmitPointAnswer'
+    url_breakthrough_result = f'{base_url}Api/PointAnswer/GetPointAnswerResult'
+    url_weeklypractice_info = f'{base_url}Api/WeeklyPractice/GetList'
+    url_weeklypractice_getsubject = f'{base_url}Api/WeeklyPractice/GetQuestion'
+    url_weeklypractice_submit = f'{base_url}Api/WeeklyPractice/SubmitTest'
+    url_weeklypractice_result = f'{base_url}Api/WeeklyPractice/GetResult'
 
     def __init__(self):
         self.session = requests.Session()
@@ -39,7 +40,7 @@ class Api:
         def login_error(login_state):
             print(login_state['msg'])
 
-        def dealwith_response(login_state):
+        def save_login_state(login_state):
             if login_state['state'] != 'success':
                 login_error(login_state)
             else:
@@ -54,9 +55,12 @@ class Api:
         except FileNotFoundError:
             usr_dict = create_usr()
         login_response = self.Post(login_url, usr_dict).json()
-        dealwith_response(login_response)
+        save_login_state(login_response)
 
     # 获取每日任务列表
+    def get_task_list(self):
+        response = self.Post(self.url_mission_nopass, {'taskGroup': 0})
+        return response.json()['data']['list']
 
     # 获取闯关答题未完成项目，返回list
     def get_breakthrough_nopass(self):
