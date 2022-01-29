@@ -5,6 +5,7 @@ import json
 
 class Api:
     base_url = 'https://learning.whchem.com:6443/'
+    url_user_info = f'{base_url}Api/Integral/GetSummaries'
     url_mission_nopass = f'{base_url}Api/Common/Task/GetTaskList'
     url_breakthrough_nopass = f'{base_url}Api/PointAnswer/GetPointAnswerDetail'
     url_breakthrough_getsubject = f'{base_url}Api/PointAnswer/GetPointAnswerQuestion'
@@ -29,11 +30,11 @@ class Api:
             return usr_dict
 
         def create_usr():
+            usr_dict = {
+                'username': input('enter username: '),
+                'password': input('enter password: ')
+            }
             with open('usr.json', 'w', encoding='utf-8') as f:
-                usr_dict = {
-                    'username': input('enter username: '),
-                    'password': input('enter password: ')
-                }
                 json.dump(usr_dict, f)
             return usr_dict
 
@@ -43,6 +44,10 @@ class Api:
         def save_login_state(login_state):
             if login_state['state'] != 'success':
                 login_error(login_state)
+                usr_dict = {}
+                with open('usr.json', 'w', encoding='utf-8') as f:
+                    json.dump(usr_dict, f)
+                self.login()
             else:
                 tokenid = login_state['data']['TokenID']
                 self.session.headers.update({'authorization': tokenid})
@@ -56,6 +61,11 @@ class Api:
             usr_dict = create_usr()
         login_response = self.Post(login_url, usr_dict).json()
         save_login_state(login_response)
+
+    # 获取用户信息
+    def get_user_info(self):
+        response = self.Post(self.url_user_info, data=None)
+        return response.json()['data']['WeekIntegral']
 
     # 获取每日任务列表
     def get_task_list(self):
