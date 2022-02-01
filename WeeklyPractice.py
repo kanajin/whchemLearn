@@ -12,7 +12,7 @@ class WeeklyPractice:
     # 获取每周一练的信息，返回获取题目需要用到的表单
     def get_info(self):
         info = self.api.get_weeklypractice_info()
-        weeklist = info['list'][int(time.strftime('%m'))-1]['WeekList']
+        weeklist = info['list'][-1]['WeekList']
         all_task = list(filter(lambda x: x['State'] == 'Doing', weeklist))
         if len(all_task) == 0:
             return {}

@@ -49,7 +49,7 @@ class Breakthrough:
         if not ispassed:
             self.dealbreakthrough(id)
         else:
-            print('success')
+            print('完成')
 
     # 闯关答题总接口
     def breakthrough(self):

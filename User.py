@@ -14,7 +14,7 @@ class User:
     # 获取任务列表
     def get_task_list(self):
         def will_show(taskid):
-            hit = [2, 7, 11, 14]
+            hit = [7, 11]
             return taskid in hit
 
         all_tasklist = self.api.get_task_list()
