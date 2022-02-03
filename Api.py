@@ -44,7 +44,7 @@ class Api:
         def save_login_state(login_state):
             if login_state['state'] != 'success':
                 login_error(login_state)
-                usr_dict = {}
+                usr_dict = create_usr()
                 with open('usr.json', 'w', encoding='utf-8') as f:
                     json.dump(usr_dict, f)
                 self.login()
