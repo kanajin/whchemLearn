@@ -3,10 +3,9 @@
 参考了[LearningFucker](https://github.com/LFTEC/LearningFucker)项目，介于此本项目不提供必修与选修课程学习~~懒得写~~。
 ## 使用
 * 运行：
-    > 直接双击打开release中的exe文件或  
+    > 下载 [release](https://github.com/kanajin/whchemLearn/releases) 或
     `$ python main.py`
 * 登录：
     > 使用万华学习的账号密码进行登录，用户名为8位，不足在前面补0
 ## 注意！
-本项目旨在帮助忙不过来的朋友完成周达标任务，因此不提供PK辅助，也呼吁大家不要使用PK外挂软件，即使不PK每周的分数也是足够的  
-对于每周必需满分的朋友，我只能说要么接受要么（）了
+本项目旨在帮助忙不过来的朋友完成周达标任务，因此不提供PK辅助，也呼吁大家不要使用PK外挂软件，即使不PK每周的分数也是足够的
